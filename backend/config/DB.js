@@ -8,7 +8,7 @@ const ConnectDB = async()=>{
       
 
     }catch(error){
-        console.log(error.red.underline)
+        console.log(error)
     }
 }
 

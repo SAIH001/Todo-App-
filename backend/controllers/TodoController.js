@@ -6,8 +6,8 @@ const TodoModel = require("../models/Todo");
 // @access    private
 
 const getTodo = async(req,res)=>{
-    
-    res.status(200).json({message:"get todo"})
+    const Todos = await TodoModel.find();
+    res.status(200).json({Todos:Todos})
 }
 
 // @Request   POST
@@ -17,22 +17,24 @@ const getTodo = async(req,res)=>{
 const createTodo = async(req,res)=>{
     try {
         // Access Todo from the request body
-        const  {Todoo}  = req.body;
-        
+         const  {Todo,Status}  = req.body;
+ 
         // Check if Todo is provided
-        if (!Todoo) {
-            return res.status(400).json({ message: 'Todo is required' });
+        if (!Todo) {
+            return res.status(400).json({ error: 'Todo is required' });
         }
 
         // Create Todo in Model 
         const newTodo = await  TodoModel.create({
-            Todo:Todoo
+            Todo:Todo,
+            Status:Status
+
         })
         // Respond with the Todo data
-        res.status(200).json({ "message":newTodo });
+        res.status(200).json({ success:'Todo created Successfull' });
     } catch (error) {
         // Handle errors
-        res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({ error: 'Server error', error });
     }
 }
 
@@ -42,15 +44,34 @@ const createTodo = async(req,res)=>{
 
 const updateTodo = async(req,res)=>{
     
+
+    const {UpdateTodo,UpdateStatus} = req.body;
+
     // Get Id of Todo
     const id = req.params.id;
 
-    // Find todo By Id
-    const AvailableTodo = await Todo.
+    // Finding any Null Values
+
+    if(!UpdateTodo){
+        return res.status(400).json({ error: 'Todo is required to update' });
+    }
+   
+    if(!UpdateStatus){
+        return res.status(400).json({ error: 'Todo Status is required to update' });
+    }
+
+    // Making Update Data Object to Update
+    const updateData = {
+        Todo:UpdateTodo,
+        Status:UpdateStatus
+    }
+
+    // Find todo By Id and Update
+    const AvailableTodo = await TodoModel.findByIdAndUpdate(id, updateData, { new: true });
 
 
 
-    res.status(200).json({message:`Update todo #  ${id}`})
+    res.status(200).json({success: "Todo is updated SuccessFully"})
 }
 
 // @Request   DELETE
@@ -58,7 +79,14 @@ const updateTodo = async(req,res)=>{
 // @access    private
 
 const deleteTodo = async(req,res)=>{
-    res.status(200).json({message:`Delete todo # ${req.params.id}`})
+    
+    // Get Id From Params
+    const id = req.params.id;
+
+    // Find and Delete Todo by Id
+    const deletedTodo = await TodoModel.findByIdAndDelete(id);
+
+    res.status(200).json({success:`Todo Deleted Successfully`})
 }
 
 

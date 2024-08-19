@@ -4,7 +4,7 @@ const ConnectDB  = require("./config/DB");
 
 const app = express();
 app.use(express.json());
-
+app.use(express.urlencoded({extended:true}))
 
 
 
@@ -16,7 +16,7 @@ app.use('/api/useraccount',require('./routes/userAccountRoutes'))
 
 
 
-app.listen(process.env.PORT || 5000,()=>{
+app.listen(process.env.PORT,()=>{
     ConnectDB();
-    console.log(`Server is running on the port of ${process.env.PORT || 5000}`);
+    console.log(`Server is running on the port of  ${process.env.PORT}`);
 })

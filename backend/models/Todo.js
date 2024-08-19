@@ -6,6 +6,10 @@ const Todo_Model = mongoose.Schema({
     Todo:{
         type:String,
         required:[true,'Please add a Todo']
+    },
+    Status:{
+        type:String,
+        require:[true,'Please set a status ']
     }
 
 },
