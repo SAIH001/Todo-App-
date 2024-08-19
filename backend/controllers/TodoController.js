@@ -17,7 +17,7 @@ const getTodo = async(req,res)=>{
 const createTodo = async(req,res)=>{
     try {
         // Access Todo from the request body
-         const  {Todo,Status}  = req.body;
+         const  {Todo,Status,userId}  = req.body;
  
         // Check if Todo is provided
         if (!Todo) {
@@ -26,6 +26,7 @@ const createTodo = async(req,res)=>{
 
         // Create Todo in Model 
         const newTodo = await  TodoModel.create({
+            userId:userId,
             Todo:Todo,
             Status:Status
 
@@ -45,7 +46,7 @@ const createTodo = async(req,res)=>{
 const updateTodo = async(req,res)=>{
     
 
-    const {UpdateTodo,UpdateStatus} = req.body;
+    const {UpdateTodo,UpdateStatus,userId} = req.body;
 
     // Get Id of Todo
     const id = req.params.id;
@@ -62,6 +63,7 @@ const updateTodo = async(req,res)=>{
 
     // Making Update Data Object to Update
     const updateData = {
+        userId:userId,
         Todo:UpdateTodo,
         Status:UpdateStatus
     }
