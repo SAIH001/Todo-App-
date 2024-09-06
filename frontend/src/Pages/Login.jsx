@@ -52,10 +52,7 @@ const Login = () => {
         
         const decodedToken = jwtDecode(token);
         
-        const userDecodeData = {
-          authtoken:token,
-          role:decodedToken.userAuth.userRole
-        }
+       
         
         Cookies.set('userData',token, { expires: 7 });
         Cookies.set('userRole', decodedToken.userAuth.userRole, { expires: 7 });
