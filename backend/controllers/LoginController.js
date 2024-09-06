@@ -39,7 +39,7 @@ const Login = async(req,res)=>{
         {expiresIn:'30d'}
     )
 
-    return res.status(400).json({"token":token});
+    return res.status(200).json({"token":token});
 }
 
 
