@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import {jwtDecode} from 'jwt-decode'; // Note the correct named import
 
+import { useNavigate } from 'react-router-dom';
+
+
 const Navbar = () => {
+  const navigate = useNavigate();
   const [role, setRole] = useState('visitor');
 
   useEffect(() => {
@@ -31,7 +35,14 @@ const Navbar = () => {
     // Clean up the interval on component unmount
     return () => clearInterval(interval);
   }, []); // Empty dependency array to run only once when the component mounts
+  
 
+  function logout() {
+    console.log("ASd")
+    Cookies.remove('userData');
+    Cookies.remove('userRole');
+    navigate('/login');
+  }
 
   return (
     <>
@@ -53,7 +64,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/registration">Registration</Link>
+                  <Link className="nav-link active" aria-current="page" to="/">Registration</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link active" aria-current="page" to="/login">Login</Link>
@@ -85,6 +96,9 @@ const Navbar = () => {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/todo-list">Todo List</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="btn btn-danger btn-sm m-1" onClick={logout}>Logout</Link>
                 </li>
               </ul>
             </div>
