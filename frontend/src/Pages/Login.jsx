@@ -73,7 +73,7 @@ const Login = () => {
 
 
     }catch(error){
-
+      toastMessage(error.response.data.error ,"error")
       console.log(error)
     }
   }  

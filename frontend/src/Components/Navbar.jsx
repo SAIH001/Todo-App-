@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import {jwtDecode} from 'jwt-decode'; // Note the correct named import
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Outlet } from 'react-router-dom';
 
 
 const Navbar = () => {
@@ -22,7 +22,9 @@ const Navbar = () => {
           console.error('Error decoding token:', error);
         }
       } else {
+       
         setRole('visitor');
+
       }
     };
 
@@ -37,12 +39,11 @@ const Navbar = () => {
   }, []); // Empty dependency array to run only once when the component mounts
   
 
-  function logout() {
-    console.log("ASd")
+  const logout = () => {
     Cookies.remove('userData');
     Cookies.remove('userRole');
-    navigate('/login');
-  }
+    window.location.href = '/';
+  };
 
   return (
     <>
@@ -75,6 +76,7 @@ const Navbar = () => {
           </div>
         </nav>
       ) : (
+        <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
             <Link className="navbar-brand" to="#">TODO APP</Link>
@@ -92,10 +94,10 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                  <Link className="nav-link" to="/add-todo">Add Todo</Link>
+                  <Link className="nav-link" to="/admindashboard/addtodo">Add Todo</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/todo-list">Todo List</Link>
+                  <Link className="nav-link" to="/admindashboard/todolist">Todo List</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="btn btn-danger btn-sm m-1" onClick={logout}>Logout</Link>
@@ -104,7 +106,11 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
+      
+   
+      </>
       )}
+      
     </>
   );
 };
